@@ -1,13 +1,3 @@
-# =============================================================================
-# YOUPI PG V2 — Docker Compose Configuration
-#
-# Usage:
-#   docker compose up -d       # Start all services in background
-#   docker compose logs -f     # Follow combined service logs
-#   docker compose down        # Stop services
-#   docker compose down -v     # Stop and remove persistent SQLite volume
-# =============================================================================
-
 services:
   gateway:
     build:
@@ -41,14 +31,9 @@ services:
       COIN_WALLET_STORE_PORT: 5000
       CONTROL_CENTER_PORT: 8090
     ports:
-      # Public surfaces. These are the ports meant to be reachable (and are the ones the
-      # Cloudflare Tunnel targets).
       - "6100:6100"   # Payment Core REST API
       - "7000:7000"   # Checkout Portal
       - "5000:5000"   # Coin Wallet Demo Store
-      # Operator surfaces. Bound to loopback on the host: the Merchant Admin holds admin
-      # credentials and the Control Center can start/stop every service and stream their
-      # logs. Publish them on 0.0.0.0 only if the host is not directly reachable.
       - "127.0.0.1:6001:6001"   # Merchant Admin Dashboard
       - "127.0.0.1:6002:6002"   # Android SMS Observer
       - "127.0.0.1:6003:6003"   # Gmail Observer
